@@ -1,3 +1,18 @@
+# Database
+db.sqlite3
+
+# Django migrations
+Cliente/CadastroAPI/migrations/
+
+# Environment variables
+.env
+
+# Django secret key
+Cliente/Cliente/settings.py
+
+# Django cache
+*.log
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
