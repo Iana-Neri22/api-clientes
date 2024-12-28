@@ -4,5 +4,6 @@ mongo_db_infos = {
     "PORT": "27017",
     "USERNAME": "iananeri",
     "PASSWORD": "Scot3232",
-    "DB_NAME": "cliente"
+    "DB_NAME": "cliente",
+    "COLLECTION_NAME": "clienteInfo"
 }
