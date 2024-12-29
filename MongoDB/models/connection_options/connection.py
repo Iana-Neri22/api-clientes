@@ -1,21 +1,7 @@
 from pymongo import MongoClient
 import os
 
-
-
 class DBConnectionHandler:
-
-    @staticmethod
-    def load_env(file_path=".env"):
-        with open(file_path) as file:
-            for line in file:
-                line = line.strip()
-                if line and not line.startswith("#"):  # Ignore empty lines and comments
-                    key, value = line.split("=", 1)
-                    os.environ[key] = value.strip().strip("'\"")  # Remove quotes if present
-
-
-    load_env()
 
     def __init__(self):
         # Use the variables for your database connection
