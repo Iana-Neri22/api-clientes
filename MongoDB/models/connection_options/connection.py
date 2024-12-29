@@ -1,46 +1,34 @@
 from pymongo import MongoClient
-from dotenv import load_dotenv
 import os
-
-
-
-
-import os
-
-# Load .env file
-load_dotenv()
-
-# Access variables
-db_host = os.getenv("DB_HOST")
-db_port = os.getenv("DB_PORT")
-secret_key = os.getenv("SECRET_KEY")
-
-print(f"Database Host: {db_host}")
-print(f"Secret Key: {secret_key}")
-
-load_dotenv()
-
-HOST = os.environ.get("HOST")
-PORT = os.environ.get("PORT")
-USERNAME = os.environ.get("USERNAME")
-PASSWORD = os.environ.get("PASSWORD")
-DB_NAME = os.environ.get("DB_NAME")
-COLLECTION_NAME = os.environ.get("COLLECTION_NAME")
 
 
 
 class DBConnectionHandler:
-    def __init__(self) -> None:
+
+    @staticmethod
+    def load_env(file_path=".env"):
+        with open(file_path) as file:
+            for line in file:
+                line = line.strip()
+                if line and not line.startswith("#"):  # Ignore empty lines and comments
+                    key, value = line.split("=", 1)
+                    os.environ[key] = value.strip().strip("'\"")  # Remove quotes if present
+
+
+    load_env()
+
+    def __init__(self):
+        # Use the variables for your database connection
+        db_user = os.getenv("DB_USER")
+        db_password = os.getenv("DB_PASSWORD")
+        #self.__db_host = os.getenv("DB_HOST")
+        self.__database_name = os.getenv("DB_NAME")
         self.__connection_string = 'mongodb+srv://{}:{}@cluster0.fzen2.mongodb.net'.format(
-            USERNAME,
-            PASSWORD
-        )
-        self.__database_name = DB_NAME
+            db_user, db_password)
         self.__client = None
         self.__db_connection = None
-        self.__db_collection = None
-        self.__db_collection_name = COLLECTION_NAME
-
+        self.__db_collection_name = os.getenv("COLLECTION_NAME")
+    
     def connect_to_db(self):
         self.__client = MongoClient(self.__connection_string)
         self.__db_connection = self.__client[self.__database_name]
