@@ -4,16 +4,15 @@ import os
 class DBConnectionHandler:
 
     def __init__(self):
-        # Use the variables for your database connection
         db_user = os.getenv("DB_USER")
         db_password = os.getenv("DB_PASSWORD")
-        #self.__db_host = os.getenv("DB_HOST")
         self.__database_name = os.getenv("DB_NAME")
         self.__connection_string = 'mongodb+srv://{}:{}@cluster0.fzen2.mongodb.net'.format(
             db_user, db_password)
         self.__client = None
         self.__db_connection = None
         self.__db_collection_name = os.getenv("COLLECTION_NAME")
+        self.__db_collection = None
     
     def connect_to_db(self):
         self.__client = MongoClient(self.__connection_string)
