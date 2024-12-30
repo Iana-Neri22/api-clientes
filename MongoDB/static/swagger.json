@@ -1,0 +1,92 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "API Clientes",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/cliente": {
+        "get": {
+          "description": "Retorna todos os clientes cadastrados na base",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Clientes retornados com sucesso"
+            }
+          }
+        },
+        "post": {
+          "description": "Cadastrar um cliente na base",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "CPF": {
+                    "type": "string",
+                    "example": "00000000000"
+                  },
+                  "nome": {
+                    "type": "string",
+                    "example": "João"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "joao@gmail.com"
+                  }
+                },
+                "required": ["CPF", "nome", "email"]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Cliente cadastrado com sucesso"
+            },
+            "400": {
+              "description": "Dados da requisição inválidos"
+            }
+          }
+        }
+      },
+      "/cliente/{cpf}": {
+        "get": {
+          "description": "Retorna o cadastro do cliente a partir do CPF",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "cpf",
+              "required": true,
+              "type": "string",
+              "description": "O CPF do cliente a ser consultado",
+              "example": "00000000000"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Cliente encontrado com sucesso"
+            },
+            "404": {
+              "description": "Cliente não encontrado"
+            }
+          }
+        }
+      }
+    }
+  }
+  
