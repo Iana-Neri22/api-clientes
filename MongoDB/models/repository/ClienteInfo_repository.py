@@ -31,44 +31,20 @@ class clienteInfoRepository:
 
     def selecionar_cliente(self, db: DBConnectionHandler, filter) -> Dict:
         collection = db.get_collection()
-        response = collection.find_one(filter, { "_id": 0 })
+        response = collection.find_one(filter)
         return response
 
-    def selecionar_cliente_se_propriedade_existir(self, db: DBConnectionHandler) -> None:
-        collection = db.get_collection()
-        data = collection.find({ "cpf": { "$exists": True } })
-        for elem in data: print(elem)
-
-    def editar_cliente(self, db:DBConnectionHandler, name) -> None:
+    def editar_cliente(self, db: DBConnectionHandler, filtro, propriedades) -> None:
         collection = db.get_collection()
         data = collection.update_one(
-            { "_id": ObjectId("645585c1ddbce431b3c82d9e") }, #Filtro
-            { "$set": { "name": name } } # Campo de edição
-        )
-        print(data.modified_count)
-
-    def edit_muitos_clientes(self, db: DBConnectionHandler, filtro, propriedades) -> None:
-        collection = db.get_collection()
-        data = collection.update_many(
-            filtro, #Filtro
+            filtro, 
             { "$set": propriedades }
         )
         print(data.modified_count)
 
-    def editar_varios_clientes(self, db: DBConnectionHandler, num) -> None:
-        collection = db.get_collection()
-        data = collection.update_many(
-            { "_id": ObjectId("645585c1ddbce431b3c82d9e") }, #Filtro
-            { "$inc": { "idade": num } }
-        )
-        print(data.modified_count)
-
-    def deletar_varios_clientes(self, db: DBConnectionHandler) -> None:
-        collection = db.get_collection()
-        data = collection.delete_many({ "profissao": "Programador" })
-        print(data.deleted_count)
     
     def deletar_cliente(self, db: DBConnectionHandler, cpf: str) -> None:
         collection = db.get_collection()
         data = collection.delete_one({ "CPF": cpf })
         print(data.deleted_count)
+

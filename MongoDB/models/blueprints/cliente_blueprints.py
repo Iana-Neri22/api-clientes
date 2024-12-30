@@ -33,9 +33,8 @@ def clientes():
 @clientes_bp.route("/<cpf>", methods=["GET", "PUT", "DELETE"])
 def cliente(cpf):
     try:
-        if request.method == "GET":
-            # Fetch a single client by CPF
-            result = db_actions.selecionar_cliente(db_handle, {"cpf": cpf})
+        if request.method == "GET":            
+            result = db_actions.selecionar_cliente(db_handle, {"CPF": cpf})
             if result:
                 return jsonify(result), 200
             else:
@@ -43,7 +42,7 @@ def cliente(cpf):
 
         elif request.method == "PUT":
             update_data = request.json
-            db_actions.edit_muitos_clientes(db_handle, {"CPF": cpf}, update_data)
+            db_actions.editar_cliente(db_handle, {"CPF": cpf}, update_data)
             return jsonify({"message": "Cliente atualizado com sucesso"}), 200
 
         elif request.method == "DELETE":
